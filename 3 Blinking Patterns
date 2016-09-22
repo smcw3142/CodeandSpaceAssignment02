@@ -1,0 +1,86 @@
+int ledPinone = 5;
+int buttonPinone = 2;
+int ledPintwo = 6;
+int buttonPintwo = 3;
+int ledPinthree = 7;
+int buttonPinthree = 4;
+int pot = A1;
+int buttonStateone = 0;
+int buttonStatetwo = 0;
+int buttonStatethree = 0;
+int sensorValue = 0;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(ledPinone, OUTPUT);
+  pinMode(ledPintwo, OUTPUT);
+  pinMode(ledPinthree, OUTPUT);
+  pinMode(buttonPinone, INPUT);
+  pinMode(buttonPintwo, INPUT);
+  pinMode(buttonPinthree, INPUT);
+}
+
+void loop() {
+  sensorValue = analogRead(pot);
+ int  brightness = map(sensorValue, 0, 1024, 0, 255);
+  buttonStateone = digitalRead(buttonPinone);
+  Serial.print("button state one: ");
+  Serial.print(buttonStateone);
+  Serial.print(", Sensor value: ");
+  Serial.print(sensorValue);
+  Serial.print(", brightnes: ");
+  Serial.println(brightness);
+  if (buttonStateone == HIGH) {
+    analogWrite(ledPinone, 0);
+    analogWrite(ledPintwo, brightness);
+    analogWrite(ledPinthree, 0);
+    delay(300);
+    analogWrite(ledPinone, brightness);
+    analogWrite(ledPintwo, 0);
+    analogWrite(ledPinthree, brightness);
+    delay(300);
+  } else {
+    analogWrite(ledPinone, 0);
+    analogWrite(ledPintwo, 0);
+    analogWrite(ledPinthree, 0);
+  }
+  
+  buttonStatetwo = digitalRead(buttonPintwo);
+  Serial.print("button state two: ");
+  Serial.print(buttonStatetwo);
+  Serial.print(", Sensor value: ");
+  Serial.print(sensorValue);
+  Serial.print(", brightnes: ");
+  Serial.println(brightness);
+  if (buttonStatetwo == HIGH) {
+    analogWrite(ledPinone, brightness);
+    analogWrite(ledPintwo, brightness);
+    analogWrite(ledPinthree, brightness);
+    delay(300);
+    analogWrite(ledPinone, 0);
+    analogWrite(ledPintwo, brightness);
+    analogWrite(ledPinthree, 0);
+    delay(300);
+  } else {
+    analogWrite(ledPinone, 0);
+    analogWrite(ledPintwo, 0);
+    analogWrite(ledPinthree, 0);
+  }
+    buttonStatethree = digitalRead(buttonPinthree);
+  Serial.print("button state three: ");
+  Serial.print(buttonStatethree);
+  Serial.print(", Sensor value: ");
+  Serial.print(sensorValue);
+  Serial.print(", brightnes: ");
+  Serial.println(brightness);
+  if (buttonStatethree == HIGH) {
+    analogWrite(ledPinone, brightness);
+    analogWrite(ledPintwo, brightness);
+    analogWrite(ledPinthree, brightness);
+    
+  } else {
+    analogWrite(ledPinone, 0);
+    analogWrite(ledPintwo, 0);
+    analogWrite(ledPinthree, 0);
+  }
+}
